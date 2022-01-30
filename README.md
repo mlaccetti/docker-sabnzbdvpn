@@ -1,8 +1,10 @@
 # [SABnzbd](https://github.com/sabnzbd/sabnzbd), WireGuard and OpenVPN
-[![Docker Pulls](https://img.shields.io/docker/pulls/dyonr/sabnzbdvpn)](https://hub.docker.com/r/dyonr/sabnzbdvpn)
-[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/dyonr/sabnzbdvpn/latest)](https://hub.docker.com/r/dyonr/sabnzbdvpn)
+[![Docker Pulls](https://img.shields.io/docker/pulls/kalazzerx/sabnzbdvpn)](https://hub.docker.com/r/kalazzerx/sabnzbdvpn)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/kalazzerx/sabnzbdvpn/latest)](https://hub.docker.com/r/kalazzerx/sabnzbdvpn)
 
 Docker container which runs the latest [SABnzbd](https://github.com/sabnzbd/SABnzbd) client while connecting to WireGuard or OpenVPN with iptables killswitch to prevent IP leakage when the tunnel goes down.
+
+**Original Credit goes to [DyonR](https://github.com/DyonR/docker-sabnzbdvpn) whom I forked from in order to get version 3.5 of [SABnzbd](https://github.com/sabnzbd/SABnzbd).**
 
 ## Docker Features
 * Base: Debian bullseye-slim

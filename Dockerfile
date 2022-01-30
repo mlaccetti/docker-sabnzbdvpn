@@ -20,6 +20,8 @@ RUN apt update \
     python3-dev \
     python3-pip \
     python3-setuptools \
+    libffi-dev \
+    libssl-dev \
     && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
     && export PATH=/root/.cargo/bin:$PATH \
     && SABNZBD_ASSETS=$(curl -sX GET "https://api.github.com/repos/sabnzbd/sabnzbd/releases" | jq '.[] | select(.prerelease==false) | .assets_url' | head -n 1 | tr -d '"') \
@@ -38,14 +40,10 @@ RUN apt update \
     libssl-dev \
     build-essential \
     python3-dev \
-    python3-pip \
-    python3-setuptools \
-    && rustup self uninstall -y \
     && apt-get clean \
     && apt -y autoremove \
-    && rm -rf \
-    /root/.cargo \
-    /var/lib/apt/lists/* \
+    && rm -rf /root/.cargo \
+    && rm -rf /var/lib/apt/lists/* \
     /tmp/* \
     /var/tmp/*
 
