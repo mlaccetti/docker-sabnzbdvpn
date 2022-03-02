@@ -20,6 +20,7 @@ Docker container which runs the latest [SABnzbd](https://github.com/sabnzbd/SABn
 The container is available from the Docker registry and this is the simplest way to get it  
 To run the container use this command, with additional parameters, please refer to the Variables, Volumes, and Ports section:
 
+## Docker run example
 ```
 $ docker run --privileged  -d \
               -v /your/config/path/:/config \
@@ -30,8 +31,56 @@ $ docker run --privileged  -d \
               -e "NAME_SERVERS=1.1.1.1,1.0.0.1" \
               -p 8080:8080 \
               --restart unless-stopped \
-              dyonr/sabnzbdvpn
+              kalazzerx/sabnzbdvpn
 ```
+
+
+### Docker Compose example
+This example uses pia vpn service
+
+```
+---
+version: "3.4"
+services:
+  sabnzbd:
+    image: kalazzerx/sabnzbdvpn:latest
+    container_name: sabnzbdvpn
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=America/Chicago
+      - VPN_ENABLED=yes
+      - VPN_CLIENT=wireguard
+      - VPN_PROV=pia
+      - VPN_USER={pia vpn user}
+      - VPN_PASS={pia vpn password}
+      - STRICT_PORT_FORWARD=yes
+      - ENABLE_PRIVOXY=yes
+      - VPN_INPUT_PORTS=1234
+      - VPN_OUTPUT_PORTS=5678
+      - DEBUG=false
+      - UMASK=0022
+      - LAN_NETWORK={your local network/24} 192.168.0.0/24
+      - NAME_SERVERS=84.200.69.80,37.235.1.174,1.1.1.1,37.235.1.177,84.200.70.40,1.0.0.1
+
+    volumes:
+      - /sabnzbd/config:/config
+      - /sabnzbd/incomplete:/incomplete-downloads
+      - /etc/localtime:/etc/localtime:ro
+      - /media:/downloads
+    ports:
+      - 8889:8080
+      - 8128:8118 
+    restart: unless-stopped
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+
+```
+
 
 # Variables, Volumes, and Ports
 ## Environment Variables

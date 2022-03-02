@@ -27,10 +27,11 @@ RUN apt update \
     && SABNZBD_ASSETS=$(curl -sX GET "https://api.github.com/repos/sabnzbd/sabnzbd/releases" | jq '.[] | select(.prerelease==false) | .assets_url' | head -n 1 | tr -d '"') \
     && SABNZBD_DOWNLOAD_URL=$(curl -sX GET ${SABNZBD_ASSETS} | jq '.[] | select(.name | contains("tar.gz")) .browser_download_url' | tr -d '"') \
     && SABNZBD_NAME=$(curl -sX GET ${SABNZBD_ASSETS} | jq '.[] | select(.name | contains("tar.gz")) .name' | tr -d '"') \
+    && echo "Downloading SABNZBD:  ${SABNZBD_NAME}" \
     && curl -o /opt/${SABNZBD_NAME} -L ${SABNZBD_DOWNLOAD_URL} \
     && tar -xzf /opt/${SABNZBD_NAME} \
-    && rm /opt/${SABNZBD_NAME} \
-    && mv /opt/SABnzbd* /opt/SABnzbd \
+    && rm -f /opt/${SABNZBD_NAME} \
+    && mv /opt/SABnzbd-* /opt/SABnzbd \
     && cd /opt/SABnzbd \
     && python3 -m pip install wheel -U \
     && python3 -m pip install -r requirements.txt -U \
