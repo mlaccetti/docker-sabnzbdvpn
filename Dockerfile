@@ -10,6 +10,7 @@ RUN mkdir -p /downloads /config/SABnzbd /etc/openvpn /etc/sabnzbd
 # Install Rust and SABnzbd
 RUN apt update \
     && apt -y upgrade \
+    && apt -y install apt-utils \
     && apt -y install --no-install-recommends \
     ca-certificates \
     curl \

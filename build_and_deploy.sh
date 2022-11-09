@@ -14,8 +14,8 @@ fi
 echo "Processing Version: '${ver}'"
 echo
 
-docker build -t sabnzbdvpn ./
-#docker build --no-cache -t sabnzbdvpn ./
+#docker build -t sabnzbdvpn ./
+docker build --no-cache -t sabnzbdvpn ./
 echo
 echo
 
