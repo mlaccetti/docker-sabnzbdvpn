@@ -1,6 +1,8 @@
 #!/bin/bash
 
-repo="kalazzerx/sabnzbdvpn"
+repo="kalazzerx/sabnzbdvpn"  #deploy to docker-hub
+#repo="localhost:5001/sabnzbdvpn"  #deploy to local registry (localhost) 
+
 #see what the latest version (github sabnzbd/sabnzbd/releases)
 ver=$(./get_sabnzdb_version.sh)
 
@@ -28,14 +30,22 @@ fi
 
 #custom registry
 #docker login registry.example.com
-echo "logging into docker"
+if [[ ! $repo == *"localhost"* ]]; then
+  echo "logging into docker"
+  docker login
+fi
+ 
 
-
-docker login
 docker tag sabnzbdvpn:latest ${repo}:${ver}
 docker tag sabnzbdvpn:latest ${repo}:latest
 docker push ${repo}:${ver}
 docker push ${repo}:latest
+
+# deploy to local registry
+#docker tag  sabnzbdvpn:latest localhost:5001/sabnzbdvpn:latest
+#docker push localhost:5001/sabnzbdvpn:latest
+
+
 echo $ver > version_deployed
 
 
